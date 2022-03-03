@@ -56,11 +56,13 @@ const ServerSelect: NextPage = () => {
 
   return (
     <Box>
+
       <Box bg='black' minHeight='100vh' pt='30'>
+
         <Flex justifyContent='center' alignItems='center'>
           {/* Server Select Box */}
 
-          <Box bg='gray.700' p={10}>
+          <Box p={10}>
             <VStack spacing={10}>
               <Text color='white' fontSize='2xl'>
                 Select Server
