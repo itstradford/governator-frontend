@@ -1,13 +1,43 @@
+import { useSession, signIn, signOut } from "next-auth/react"
 import { Box, HStack, VStack, Flex, Text, Link, Image } from '@chakra-ui/react'
 
-const userDetails = {
-  img: '/images/gov-bot.jpeg',
-  name: 'Ken#7046',
-}
-
 const NavBar: React.FC = () => {
+
+  const { data: session } = useSession()
+
+  const renderLoginText = () => {
+    return (
+      <HStack justifyContent='center' alignItems='center'>
+        <Link color='gray.500' href='#' onClick={() => {signIn('discord')}}>Login</Link>
+      </HStack>
+    )
+  }
+
+  const renderUserAvatar = () => {
+
+    const name = session?.user?.name
+    const image = session?.user?.image
+
+    return (
+      <HStack>
+        <Image
+          src={image || ''}
+          alt='user-avatar'
+          borderRadius='full'
+          boxSize='50px'
+        />
+        <VStack>
+          <Text color='white'>{name}</Text>
+          <Link color='gray.500' href='#' onClick={() => {signOut()}}>
+            Logout
+          </Link>
+        </VStack>
+      </HStack>
+    )
+  }
+
   return (
-    <Box bg='dark-1' px={10} py={4} h='90px'>
+    <Box bg='gray.700' px={10} py={4}>
       <Flex justifyContent='space-between' alignItems='center'>
         {/* Logo */}
         <Box>
@@ -20,25 +50,15 @@ const NavBar: React.FC = () => {
         </Box>
 
         {/* User Display */}
-        <Box>
-          <HStack>
-            <Image
-              src={userDetails.img}
-              alt='user-avatar'
-              borderRadius='full'
-              boxSize='50px'
-            />
-            <VStack>
-              <Text color='white'>{userDetails.name}</Text>
-              <Link color='gray.500' href='#'>
-                Logout
-              </Link>
-            </VStack>
-          </HStack>
+        <Box ml='auto'>
+          {session ? renderUserAvatar() : renderLoginText()}
+
         </Box>
       </Flex>
     </Box>
   )
+
+ 
 }
 
 export default NavBar
