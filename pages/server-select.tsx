@@ -60,7 +60,7 @@ const ServerSelect: NextPage = () => {
         <Flex justifyContent='center' alignItems='center'>
           {/* Server Select Box */}
 
-          <Box bg='gray.700' p={10}>
+          <Box p={10}>
             <VStack spacing={10}>
               <Text color='white' fontSize='2xl'>
                 Select Server
