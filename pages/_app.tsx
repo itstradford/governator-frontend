@@ -5,6 +5,14 @@ import GovBotProvider from 'components/context-provider/provider'
 import theme from 'config/theme'
 import NavBar from 'components/NavBar'
 
+import '@fontsource/noto-sans/400.css'
+import '@fontsource/noto-sans/700.css'
+
+import '@fontsource/roboto-mono/400.css'
+import '@fontsource/roboto-mono/500.css'
+import '@fontsource/roboto-mono/600.css'
+import '@fontsource/roboto-mono/700.css'
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>

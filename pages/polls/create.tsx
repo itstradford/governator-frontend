@@ -15,7 +15,7 @@ const CreatePoll: NextPage = () => {
         <GovCrumb />
         <Flex
           color='gray.100'
-          fontSize='3xl'
+          fontSize='2xl'
           fontWeight='600'
           mt='3rem'
           alignItems='center'
