@@ -10,8 +10,6 @@ import {
   Textarea,
 } from '@chakra-ui/react'
 import ThemedFormErrorMessage from 'components/ThemedFormErrorMessage'
-import { uniqueId } from 'lodash'
-import { useState } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { FiPlus, FiTrash } from 'react-icons/fi'
 import { Select } from 'chakra-react-select'
