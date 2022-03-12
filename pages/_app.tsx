@@ -11,13 +11,16 @@ import '@fontsource/roboto-mono/400.css'
 import '@fontsource/roboto-mono/500.css'
 import '@fontsource/roboto-mono/600.css'
 import '@fontsource/roboto-mono/700.css'
+import RouteGuard from 'components/RouteGuard'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={theme}>
         <NavBar />
-        <Component {...pageProps} />
+        <RouteGuard>
+          <Component {...pageProps} />
+        </RouteGuard>
       </ChakraProvider>
     </SessionProvider>
   )
