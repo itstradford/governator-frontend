@@ -4,39 +4,16 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { Box, VStack, Image, Flex, Text, HStack, Grid } from '@chakra-ui/react'
 
-// const servers = [
-//   {
-//     img: '/images/gov-bot.jpeg',
-//     name: 'Server1',
-//   },
-//   {
-//     img: '/images/gov-bot.jpeg',
-//     name: 'Server2',
-//   },
-//   {
-//     img: '/images/gov-bot.jpeg',
-//     name: 'Server3',
-//   },
-//   {
-//     img: '/images/gov-bot.jpeg',
-//     name: 'Server4',
-//   },
-// ]
-
 const ServerSelect: NextPage = () => {
   const { data: session } = useSession()
   const [servers, setServers] = useState([])
-
-  if (!session) {
-    return <div>NOT SIGNED IN BEECH</div>
-  }
 
   const getUserGuilds = async () => {
     try {
       console.log('getting user guilds')
       const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${session?.accessToken}`,
       }
 
       const data = await axios.get('https://discord.com/api/users/@me/guilds', {
@@ -56,9 +33,7 @@ const ServerSelect: NextPage = () => {
 
   return (
     <Box>
-
       <Box bg='black' minHeight='100vh' pt='30'>
-
         <Flex justifyContent='center' alignItems='center'>
           {/* Server Select Box */}
 
@@ -78,7 +53,8 @@ const ServerSelect: NextPage = () => {
                       <Box
                         p={1}
                         borderRadius='full'
-                        _groupHover={{ bg: 'teal' }}>
+                        _groupHover={{ bg: 'teal' }}
+                      >
                         {_server.icon ? (
                           <Image
                             src={img}
@@ -92,14 +68,15 @@ const ServerSelect: NextPage = () => {
                             background='grey'
                             boxSize='50px'
                             justifyContent='center'
-                            alignItems='center'>
+                            alignItems='center'
+                          >
                             <Text fontSize='medium'>
                               {_server.name.slice(0, 2).toUpperCase()}
                             </Text>
                           </Flex>
                         )}
                       </Box>
-                      <Text color='white'>{_server.name.slice(0,15)}</Text>
+                      <Text color='white'>{_server.name.slice(0, 15)}</Text>
                     </VStack>
                   )
                 })}
