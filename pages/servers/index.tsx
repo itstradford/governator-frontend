@@ -14,39 +14,16 @@ import {
  
 import Govcrumb from 'components/BreadCrumb'
 
-// const servers = [
-//   {
-//     img: '/images/gov-bot.jpeg',
-//     name: 'Server1',
-//   },
-//   {
-//     img: '/images/gov-bot.jpeg',
-//     name: 'Server2',
-//   },
-//   {
-//     img: '/images/gov-bot.jpeg',
-//     name: 'Server3',
-//   },
-//   {
-//     img: '/images/gov-bot.jpeg',
-//     name: 'Server4',
-//   },
-// ]
-
 const ServerSelect: NextPage = () => {
   const { data: session } = useSession()
   const [servers, setServers] = useState([])
-
-  if (!session) {
-    return <div>NOT SIGNED IN BEECH</div>
-  }
 
   const getUserGuilds = async () => {
     try {
       console.log('getting user guilds')
       const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${session.accessToken}`,
+        Authorization: `Bearer ${session?.accessToken}`,
       }
 
       const data = await axios.get('https://discord.com/api/users/@me/guilds', {
