@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react'
 import Govcrumb from 'components/BreadCrumb'
 import useServers from 'hooks/useServers'
+import { FiBarChart } from 'react-icons/fi'
 
 const Dashboard: NextPage = () => {
   const router = useRouter()
@@ -37,7 +38,27 @@ const Dashboard: NextPage = () => {
   return (
     <Box bg='dark-2' minH='calc(100vh - 60px)' pt='4rem' pb='8rem'>
       <Box bg='dark-1' maxW='2xl' mx='auto' p='2rem 3rem'>
-        <Govcrumb currentServerName={currentServer?.name} />
+        <Flex justifyContent='space-between' alignItems='center'>
+          <Govcrumb currentServerName={currentServer?.name} />
+          <NextLink href={`${router.asPath}/polls`}>
+            <a>
+              <Flex
+                color='teal.300'
+                _hover={{
+                  color: 'teal.100',
+                }}
+                alignItems='center'
+                cursor='pointer'
+              >
+                <Box mr='0.5rem'>
+                  <FiBarChart />
+                </Box>
+                <Text as='span'>Polls</Text>
+              </Flex>
+            </a>
+          </NextLink>
+        </Flex>
+
         <Flex justifyContent='center' alignItems='center'>
           {/* Dashboard Buttons Box */}
           <Box p={10} mt='1rem'>
