@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { string } from 'yup'
 
 export const privateBaseAxios = axios.create({
   baseURL:
@@ -15,3 +16,6 @@ export const discordAxios = (accessToken: string) =>
       Authorization: `Bearer ${accessToken}`,
     },
   })
+
+export const discordFetcher = (url: string, accessToken: string) =>
+  discordAxios(accessToken).get(url)
