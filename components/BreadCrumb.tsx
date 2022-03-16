@@ -2,58 +2,60 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Text, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
+import { capitalize } from 'lodash'
 
 export interface T_crumbs {
   href: string
   name: string
-  disabled?: true
 }
 ;[]
 
-const Govcrumb: React.FC = () => {
-  const [crumb, setCrumb] = useState([])
+type GovcrumbProps = {
+  currentServerName?: string
+}
+
+const Govcrumb: React.FC<GovcrumbProps> = ({ currentServerName }) => {
+  const [crumb, setCrumb] = useState<T_crumbs[]>([])
 
   const router = useRouter()
+  const guildId = router.asPath.split('/')[2]
 
   useEffect(() => {
     const path = router.asPath
     const paths = path.split('/')
     const crumbs: T_crumbs[] = []
+    let baseUrl = '/servers'
 
-    if (paths.length >= 2) {
-      crumbs.push({
-        href: '/servers',
-        name: 'Servers',
-      })
-    }
-    if (paths.length >= 3) {
-      crumbs.push({
-        href: `/servers/${router.query.serverId}`,
-        name: 'Dashboard',
-      })
-    }
-    if (paths.length >= 4) {
-      crumbs.push({
-        href: `/servers/${router.query.serverId}/polls`,
-        name: 'Polls',
-      })
-    }
-    if (paths.length >= 5) {
-      crumbs.push({
-        href: `/servers/${router.query.serverId}/polls/${paths[4]}`,
-        name: 'Create',
-        disabled: true,
-      })
-    }
+    paths.forEach((p, i) => {
+      if (i === 1) {
+        crumbs.push({
+          href: baseUrl,
+          name: 'Servers',
+        })
+      } else if (i === 2) {
+        baseUrl = `${baseUrl}/${guildId}`
+        crumbs.push({
+          href: baseUrl,
+          name: currentServerName || 'Loading...',
+        })
+      } else if (i >= 3) {
+        baseUrl = `${baseUrl}/${p}`
+        crumbs.push({
+          href: baseUrl,
+          name: capitalize(p),
+        })
+      }
+    })
 
     setCrumb(crumbs)
-  }, [router.query])
+  }, [router.query, currentServerName])
 
   return (
     <Breadcrumb
       spacing='8px'
-      separator={<ChevronRightIcon color='black' />}
-      color='gray.300'>
+      separator={<ChevronRightIcon color='gray.500' />}
+      color='gray.300'
+    >
       {crumb.map((_crumb: T_crumbs, idx: number) => {
         return (
           <BreadcrumbItem key={idx}>
