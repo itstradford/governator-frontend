@@ -24,6 +24,7 @@ import * as luxon from 'luxon'
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import { FaDiscord } from 'react-icons/fa'
 import { FiBarChart } from 'react-icons/fi'
+import DeletePoll from 'components/polls/DeletePoll'
 
 const StyledTable = styled(Table)`
   & {
@@ -51,7 +52,7 @@ const pollOptions = [
 const Polls: NextPage = () => {
   const { loading, currentServer } = useServers()
 
-  const { data, error } = useSWR('/poll/list', privateBaseFetcher)
+  const { data, error, mutate } = useSWR('/poll/list', privateBaseFetcher)
   const polls = data?.data ? (data?.data as Poll[]) : []
   const isLoadingPolls = !data && !error
 
@@ -113,21 +114,7 @@ const Polls: NextPage = () => {
                       <Td>0</Td>
                       <Td>
                         <Flex w='max-content' mx='auto'>
-                          <Button
-                            variant='ghost'
-                            size='sm'
-                            color='red.500'
-                            _active={{
-                              color: 'white',
-                              backgroundColor: 'red.300',
-                            }}
-                            _hover={{
-                              color: 'white',
-                              backgroundColor: 'red.500',
-                            }}
-                          >
-                            <DeleteIcon fontSize='15px' />
-                          </Button>
+                          <DeletePoll poll={p} mutate={mutate} />
                           <Button
                             variant='ghost'
                             size='sm'
