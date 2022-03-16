@@ -27,19 +27,18 @@ const Govcrumb: React.FC<GovcrumbProps> = ({ currentServerName }) => {
     let baseUrl = '/servers'
 
     paths.forEach((p, i) => {
-      if (i === 0) {
+      if (i === 1) {
         crumbs.push({
           href: baseUrl,
           name: 'Servers',
         })
-      } else if (i === 1) {
+      } else if (i === 2) {
         baseUrl = `${baseUrl}/${guildId}`
         crumbs.push({
           href: baseUrl,
           name: currentServerName || 'Loading...',
         })
-      } else if (i === 2) {
-      } else {
+      } else if (i >= 3) {
         baseUrl = `${baseUrl}/${p}`
         crumbs.push({
           href: baseUrl,
