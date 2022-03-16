@@ -17,8 +17,7 @@ import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { FiPlus, FiTrash } from 'react-icons/fi'
 import { Select } from 'chakra-react-select'
 import ThemedDateTimePicker from 'components/ThemedDateTimePicker'
-import { discordFetcher, privateBaseAxios } from 'constants/axios'
-import useSWR from 'swr'
+import { privateBaseAxios } from 'constants/axios'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import * as yup from 'yup'
@@ -33,7 +32,7 @@ interface Poll {
   end_time: Date | null
   description: string
   role_restrictions: string[]
-  author_discord_id: string
+  author_user_id: string
 }
 
 const schema = yup.object().shape({
@@ -48,7 +47,7 @@ const schema = yup.object().shape({
   single_vote: yup.boolean(),
   end_time: yup.date().required('Required.'),
   description: yup.string().required('Required.'),
-  author_discord_id: yup.string().required('Required'),
+  author_user_id: yup.string().required('Required'),
 })
 
 const options = [
@@ -68,13 +67,6 @@ const PollForm: React.FC<BoxProps> = ({ ...props }) => {
   const router = useRouter()
   const guildId = router.asPath.split('/')[2]
 
-  const { data } = useSWR(
-    session?.accessToken
-      ? [`/guilds/${guildId}/channels`, session?.accessToken]
-      : null,
-    discordFetcher
-  )
-
   const {
     register,
     handleSubmit,
@@ -84,9 +76,6 @@ const PollForm: React.FC<BoxProps> = ({ ...props }) => {
     formState: { errors, isSubmitting },
     watch,
   } = useForm<Poll>({
-    defaultValues: {
-      author_discord_id: '9999',
-    },
     resolver: yupResolver(schema),
   })
   const { fields, append, remove } = useFieldArray({
@@ -325,6 +314,11 @@ const PollForm: React.FC<BoxProps> = ({ ...props }) => {
               )}
             />
           </FormControl>
+          <input
+            type='hidden'
+            {...register('author_user_id')}
+            value='623190782abb88dc97fdfb2a'
+          />
           <Flex mt='4rem'>
             <Button
               type='submit'
