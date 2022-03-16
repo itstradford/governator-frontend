@@ -36,7 +36,7 @@ const Govcrumb: React.FC<GovcrumbProps> = ({ currentServerName }) => {
         baseUrl = `${baseUrl}/${guildId}`
         crumbs.push({
           href: baseUrl,
-          name: currentServerName || '',
+          name: currentServerName || 'Loading...',
         })
       } else if (i === 2) {
       } else {
