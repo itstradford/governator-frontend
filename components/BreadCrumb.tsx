@@ -1,53 +1,67 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react'
+import { Text, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 
 export interface T_crumbs {
-  href: string,
+  href: string
   name: string
-}[]
+  disabled?: true
+}
+;[]
 
 const Govcrumb: React.FC = () => {
+  const [crumb, setCrumb] = useState([])
 
-  const [crumb, setCrumb] = useState([]);
-
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
-
     const path = router.asPath
     const paths = path.split('/')
     const crumbs: T_crumbs[] = []
 
-    console.log({paths})
-
     if (paths.length >= 2) {
       crumbs.push({
         href: '/servers',
-        name: 'Servers'
+        name: 'Servers',
       })
     }
     if (paths.length >= 3) {
       crumbs.push({
         href: `/servers/${router.query.serverId}`,
-        name: 'Dashboard'
+        name: 'Dashboard',
+      })
+    }
+    if (paths.length >= 4) {
+      crumbs.push({
+        href: `/servers/${router.query.serverId}/polls`,
+        name: 'Polls',
+      })
+    }
+    if (paths.length >= 5) {
+      crumbs.push({
+        href: `/servers/${router.query.serverId}/polls/${paths[4]}`,
+        name: 'Create',
+        disabled: true,
       })
     }
 
     setCrumb(crumbs)
-
-  },[router.query])
+  }, [router.query])
 
   return (
     <Breadcrumb
       spacing='8px'
-      separator={<ChevronRightIcon color='gray.500' />}
+      separator={<ChevronRightIcon color='black' />}
       color='gray.300'>
       {crumb.map((_crumb: T_crumbs, idx: number) => {
         return (
           <BreadcrumbItem key={idx}>
-            <BreadcrumbLink href={_crumb.href}>{_crumb.name}</BreadcrumbLink>
+            {_crumb.disabled ? (
+              <Text>{_crumb.name}</Text>
+            ) : (
+              <BreadcrumbLink color='#fe0000' fontWeight={700} href={_crumb.href}>{_crumb.name}</BreadcrumbLink>
+            )}
           </BreadcrumbItem>
         )
       })}

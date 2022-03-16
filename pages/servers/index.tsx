@@ -41,7 +41,7 @@ const ServerSelect: NextPage = () => {
         setLoading(false)
       }
     }
-  }, [servers])
+  }, [servers, session?.accessToken])
 
   useEffect(() => {
     getUserGuilds()
@@ -77,28 +77,33 @@ const ServerSelect: NextPage = () => {
                   key={`server-${idx}`}
                   cursor='pointer'
                   role='group'>
-                  <Link href={`/servers/${_server.id}`}>
-                    <Box p={1} borderRadius='full' _groupHover={{ bg: 'teal' }}>
-                      {_server.icon ? (
-                        <Image
-                          src={img}
-                          alt='user-avatar'
+                      <Link
+                        href={`/servers/${_server.id}`}>
+                        <Box
+                          p={1}
                           borderRadius='full'
-                          boxSize='50px'
-                        />
-                      ) : (
-                        <Flex
-                          borderRadius='full'
-                          background='grey'
-                          boxSize='50px'
-                          justifyContent='center'
-                          alignItems='center'
-                          w='max-content'>
-                          <Text fontSize='medium'>{_server.name}</Text>
-                        </Flex>
-                      )}
-                    </Box>
-                  </Link>
+                          _groupHover={{ bg: 'teal' }}>
+                          {_server.icon ? (
+                            <Image
+                              src={img}
+                              alt='user-avatar'
+                              borderRadius='full'
+                              boxSize='50px'
+                            />
+                          ) : (
+                            <Flex
+                              borderRadius='full'
+                              background='grey'
+                              boxSize='50px'
+                              justifyContent='center'
+                              alignItems='center'>
+                              <Text fontSize='medium'>
+                                {_server.name.slice(0, 2).toUpperCase()}
+                              </Text>
+                            </Flex>
+                          )}
+                        </Box>
+                      </Link>
                   <Text color='white' overflow='hidden' textOverflow='ellipsis'>
                     {`${
                       _server.name.length > 10

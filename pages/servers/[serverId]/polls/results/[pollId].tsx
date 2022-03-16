@@ -1,20 +1,21 @@
 import type { NextPage } from 'next'
-import { useCallback } from 'react'
+// import { useCallback, useEffect, useState } from 'react'
 import {
   Box,
-  Text,
   Flex,
+  Text,
 } from '@chakra-ui/react'
+
 import { BiBarChartSquare } from 'react-icons/bi'
-import CreatePollForm from 'components/polls/CreatePollForm'
-import GovCrumb from 'components/BreadCrumb';
 
-const CreatePoll: NextPage = () => {
+import Govcrumb from 'components/BreadCrumb'
+import DisplayPollResults from 'components/polls/DisplayPollResults'
 
+const PollResults: NextPage = () => {
   return (
     <Box bg='dark-2' minH='calc(100vh - 90px)' pt='4rem' pb='8rem'>
       <Box bg='dark-1' maxW='2xl' mx='auto' p='2rem 3rem'>
-        <GovCrumb />
+        <Govcrumb />
         <Flex
           color='gray.100'
           fontSize='2xl'
@@ -22,17 +23,16 @@ const CreatePoll: NextPage = () => {
           mt='3rem'
           alignItems='center'
           mx='auto'
-          maxW='max-content'
-        >
+          maxW='max-content'>
           <BiBarChartSquare fontSize='36px' />
           <Text as='span' display='block' align='center' ml='1rem'>
-            Creating Poll
+            Poll Name Here ..
           </Text>
         </Flex>
-        <CreatePollForm mt='2rem' />
+        <DisplayPollResults mt='2rem' />
       </Box>
     </Box>
   )
 }
 
-export default CreatePoll
+export default PollResults
