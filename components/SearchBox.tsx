@@ -68,7 +68,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
         <Input
           type='text'
           size='md'
-          w='sm'
+          w='2xs'
           borderColor='gray.400'
           color='gray.200'
           ref={ref}
