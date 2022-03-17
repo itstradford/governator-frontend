@@ -69,7 +69,9 @@ const DataTable: React.FC<DataTableProps> = ({ data, columns, loading }) => {
                         justifyContent: 'center',
                       })}
                     >
-                      <chakra.span>{column.render('Header')}</chakra.span>
+                      <chakra.span mr='1rem'>
+                        {column.render('Header')}
+                      </chakra.span>
                       {!lastColumn && (
                         <chakra.span display='flex' flexDir='column'>
                           <TriangleUpIcon

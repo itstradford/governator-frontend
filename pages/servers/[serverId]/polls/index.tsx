@@ -14,7 +14,6 @@ import useSWR from 'swr'
 import { privateBaseFetcher } from 'constants/axios'
 import { Poll, RenderedPoll } from 'interfaces'
 import * as luxon from 'luxon'
-import { EditIcon } from '@chakra-ui/icons'
 import { FaDiscord } from 'react-icons/fa'
 import { FiBarChart } from 'react-icons/fi'
 import DeletePoll from 'components/polls/DeletePoll'
@@ -47,21 +46,6 @@ const Polls: NextPage = () => {
     actions: (
       <Flex w='max-content' mx='auto'>
         <DeletePoll poll={p} mutate={mutate} />
-        <Button
-          variant='ghost'
-          size='sm'
-          color='orange.500'
-          _active={{
-            color: 'white',
-            backgroundColor: 'orange.300',
-          }}
-          _hover={{
-            color: 'white',
-            backgroundColor: 'orange.500',
-          }}
-        >
-          <EditIcon fontSize='15px' />
-        </Button>
         <Button
           variant='ghost'
           size='sm'
