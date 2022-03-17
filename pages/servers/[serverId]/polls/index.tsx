@@ -5,45 +5,22 @@ import {
   Text,
   Flex,
   Spinner,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
   Button,
   Container,
 } from '@chakra-ui/react'
 import Govcrumb from 'components/BreadCrumb'
 import useServers from 'hooks/useServers'
-import styled from '@emotion/styled'
 import useSWR from 'swr'
 import { privateBaseFetcher } from 'constants/axios'
-import { Poll } from 'interfaces'
+import { Poll, RenderedPoll } from 'interfaces'
 import * as luxon from 'luxon'
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
+import { EditIcon } from '@chakra-ui/icons'
 import { FaDiscord } from 'react-icons/fa'
 import { FiBarChart } from 'react-icons/fi'
 import DeletePoll from 'components/polls/DeletePoll'
 import DataTable from 'components/Datatable'
-import React from 'react'
-
-const StyledTable = styled(Table)`
-  & {
-    thead tr {
-      background-color: #1a1d24;
-      th {
-        border-color: transparent;
-      }
-    }
-    tbody tr:nth-child(odd) {
-      background-color: #21262e;
-    }
-    tbody tr td {
-      border-color: transparent;
-    }
-  }
-`
+import React, { useEffect, useState } from 'react'
+import SearchBox from 'components/SearchBox'
 
 const pollOptions = [
   { value: '1234', label: '#chocolate' },
@@ -58,7 +35,9 @@ const Polls: NextPage = () => {
   const pollsData = data?.data ? (data?.data as Poll[]) : []
   const isLoadingPolls = !data && !error
 
-  const polls = pollsData.map(p => ({
+  const [polls, setPolls] = useState<RenderedPoll[]>([])
+
+  const originalPolls = pollsData.map(p => ({
     id: p._id,
     created: luxon.DateTime.fromISO(p.createdAt).toFormat('LLL dd yyyy t'),
     name: p.title,
@@ -144,6 +123,12 @@ const Polls: NextPage = () => {
     },
   ]
 
+  useEffect(() => {
+    if (data) {
+      setPolls(originalPolls)
+    }
+  }, [data])
+
   return (
     <Box bg='dark-2' minH='calc(100vh - 60px)' pt='4rem' pb='8rem'>
       <Container maxW='container.xl'>
@@ -165,28 +150,25 @@ const Polls: NextPage = () => {
                 mx='auto'
                 w='max-content'
                 fontSize='2xl'
-                mt='2rem'
+                my='2rem'
               >
                 Poll Listings
               </Text>
-              {!isLoadingPolls && <DataTable data={polls} columns={columns} />}
-              {isLoadingPolls && (
-                <Flex>
-                  <Spinner color='gray.200' mx='auto' />
+              <Box>
+                <Flex mb='1rem'>
+                  <SearchBox
+                    setValue={setPolls}
+                    originalValues={originalPolls}
+                    searchKeys={['name']}
+                    placeholder='Search poll name...'
+                  />
                 </Flex>
-              )}
-              {!polls?.length && !isLoadingPolls && (
-                <Text
-                  as='span'
-                  display='block'
-                  w='max-content'
-                  mx='auto'
-                  color='gray.200'
-                  mt='1rem'
-                >
-                  There are no polls.
-                </Text>
-              )}
+                <DataTable
+                  data={polls}
+                  columns={columns}
+                  loading={isLoadingPolls}
+                />
+              </Box>
             </>
           )}
         </Box>
