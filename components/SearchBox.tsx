@@ -54,8 +54,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({
         )
         .map(i => i.item)
 
-      console.log({ keyword })
-
       setValue(newValues)
     }
   }, [keyword])
@@ -68,7 +66,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({
         <Input
           type='text'
           size='md'
-          w='2xs'
+          w='xs'
           borderColor='gray.400'
           color='gray.200'
           ref={ref}
