@@ -8,6 +8,7 @@ import {
   Button,
   Container,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import Govcrumb from 'components/BreadCrumb'
 import useServers from 'hooks/useServers'
 import useSWR from 'swr'
@@ -17,6 +18,7 @@ import * as luxon from 'luxon'
 import { FaDiscord } from 'react-icons/fa'
 import { FiBarChart } from 'react-icons/fi'
 import DeletePoll from 'components/polls/DeletePoll'
+
 import DataTable from 'components/Datatable'
 import React, { useEffect, useState } from 'react'
 import SearchBox from 'components/SearchBox'
@@ -28,6 +30,7 @@ const pollOptions = [
 ]
 
 const Polls: NextPage = () => {
+  const router = useRouter()
   const { loading, currentServer } = useServers()
 
   const { data, error, mutate } = useSWR('/poll/list', privateBaseFetcher)
