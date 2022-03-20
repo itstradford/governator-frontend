@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import NextLink from 'next/link'
 import {
   Box,
   VStack,
@@ -18,6 +19,7 @@ import * as luxon from 'luxon'
 import { FaDiscord } from 'react-icons/fa'
 import { FiBarChart } from 'react-icons/fi'
 import DeletePoll from 'components/polls/DeletePoll'
+
 
 import DataTable from 'components/Datatable'
 import React, { useEffect, useState } from 'react'
@@ -64,21 +66,24 @@ const Polls: NextPage = () => {
         >
           <FaDiscord fontSize='15px' />
         </Button>
-        <Button
-          variant='ghost'
-          size='sm'
-          color='teal.500'
-          _active={{
-            color: 'white',
-            backgroundColor: 'teal.300',
-          }}
-          _hover={{
-            color: 'white',
-            backgroundColor: 'teal.500',
-          }}
-        >
-          <FiBarChart fontSize='15px' />
-        </Button>
+        <NextLink href={`${router.asPath}/results/${p._id}`}>
+          <Button
+            variant='ghost'
+            size='sm'
+            color='teal.500'
+            _active={{
+              color: 'white',
+              backgroundColor: 'teal.300',
+            }}
+            _hover={{
+              color: 'white',
+              backgroundColor: 'teal.500',
+            }}
+            href="#"
+          >
+            <FiBarChart fontSize='15px' />
+          </Button>
+        </NextLink>
       </Flex>
     ),
   }))
